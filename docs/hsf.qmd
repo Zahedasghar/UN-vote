@@ -6,6 +6,9 @@ date-format: "DD-MM-YYYY"
 format: 
   revealjs:
     theme: [default, custom.css,styles.scss]
+    chalkboard: true
+    slide-number: c/t
+  
     title-slide-attributes:
       data-background-image: images/HSF_germany.jpg
       data-background-size: 20%
