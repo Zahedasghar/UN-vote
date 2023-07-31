@@ -488,33 +488,32 @@
 <h2>Inspecting data frames</h2>
 <h3 id="size">Size:</h3>
 <ul>
-<li><p><code>dim(interviews)</code> - <span style="color:red;">returns a vector with the number of rows as the first element, and the number of columns as the second element (the dimensions of the object)</span></p></li>
-<li><p><code>nrow(interviews)</code> - returns the number of rows</p></li>
-<li><p><code>ncol(interviews)</code> - <span style="colore:red;">returns the number of columns</span></p></li>
+<li><p><code>dim(df)</code> - <span style="color:red;">returns a vector with the number of rows as the first element, and the number of columns as the second element (the dimensions of the object)</span></p></li>
+<li><p><code>nrow(df)</code> - returns the number of rows</p></li>
+<li><p><code>ncol(df)</code> - <span style="colore:red;">returns the number of columns</span></p></li>
 </ul>
 <h3 id="content">Content:</h3>
 <ul>
-<li><p><code>head(interviews)</code> - shows the first 6 rows</p></li>
-<li><p><code>tail(interviews)</code> - shows the last 6 rows</p></li>
+<li><p><code>head(df)</code> - shows the first 6 rows</p></li>
+<li><p><code>tail(df)</code> - shows the last 6 rows</p></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="names">Names:</h3>
 <ul>
-<li><code>names(interviews)</code> - returns the column names (synonym of colnames() for data.frame objects)</li>
+<li><code>names(df)</code> - returns the column names (synonym of colnames() for data.frame objects)</li>
 </ul>
 <h3 id="summary">Summary:</h3>
 <ul>
-<li><p><code>str(interviews)</code> - structure of the object and information about the class, length and content of each column</p></li>
-<li><p><code>summary(interviews)</code> - summary statistics for each column</p></li>
-<li><p><code>glimpse(interviews)</code> - returns the number of columns and rows of the tibble, the names and class of each column, and previews as many values will fit on the screen. Unlike the other inspecting functions listed above, glimpse() is not a “base R” function so you need to have the dplyr or tibble packages loaded to be able to execute it.</p></li>
+<li><p><code>str(df)</code> - structure of the object and information about the class, length and content of each column</p></li>
+<li><p><code>summary(df)</code> - summary statistics for each column</p></li>
+<li><p><code>glimpse(df)</code> - returns the number of columns and rows of the tibble, the names and class of each column, and previews as many values will fit on the screen.</p></li>
 </ul>
-</section></section>
-<section>
-<section id="metadata-data-for-data" class="title-slide slide level1 center">
-<h1>Metadata <span class="flow">Data for data</span></h1>
-
+</section>
+<section id="data-for-data" class="slide level2">
+<h2><span class="flow">Data for data</span></h2>
+<h3 id="must-have-metadata">Must have Metadata</h3>
 </section>
 <section id="data-dealing-with-these-commands" class="slide level2 r-stretch">
 <h2>80% data dealing with these commands</h2>
@@ -546,36 +545,14 @@
 </section>
 <section id="time-line-data" class="slide level2">
 <h2>Time-line data</h2>
-<p>image</p>
-</section>
+
+<img data-src="images/timeline.png" class="center r-stretch quarto-figure-center"><p class="caption">Finance Ministers Approach</p></section>
 <section id="economic-policy-uncertainty" class="slide level2">
 <h2>Economic Policy uncertainty</h2>
-<ul>
-<li>image</li>
-</ul>
-</section>
+
+<img data-src="images/epu_ragg_20X15.png" class="center r-stretch quarto-figure-center"><p class="caption">Economic Policy Uncertainty Index</p></section>
 <section id="section-2" class="slide level2" data-background-color="black" data-background-image="https://media1.giphy.com/media/92cu6TfCZDVRBkmmDu/giphy.gif?cid=ecf05e47fx13mfnwlup7i5nr1amq03uocrl768itcnx81qf7&amp;ep=v1_gifs_related&amp;rid=giphy.gif&amp;ct=g" data-background-size="300px" data-background-repeat="repeat">
 <h2></h2>
-</section>
-<section id="micro-credential-benefits" class="slide level2">
-<h2>Micro-credential benefits</h2>
-<div class="columns">
-<div class="column" style="width:20%;">
-<ul>
-<li><p>In Demand</p></li>
-<li><p>Fast</p></li>
-<li><p>Stack</p></li>
-<li><p>Affordable</p></li>
-</ul>
-</div><div class="column" style="width:80%;">
-<ul>
-<li>Micro-credential fills demands for skills in need</li>
-<li>Micro-credentials are short term programs</li>
-<li>Micro-credentials add-up to get a degree</li>
-<li>Micro-credential are affordable and cost-effective</li>
-</ul>
-</div>
-</div>
 <div class="footer footer-default">
 
 </div>

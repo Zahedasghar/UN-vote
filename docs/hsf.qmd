@@ -20,12 +20,7 @@ execute:
 editor: visual
 ---
 
-## {background-color="black" background-image="https://media2.giphy.com/media/dPINusoxaJi2dU3gML/200.webp?cid=ecf05e472ghokh39348y5t428uk6lus4s0gkaiaqlwkznhuc&ep=v1_gifs_related&rid=200.webp&ct=g" background-size="300px" background-repeat="repeat"}
-
-
-
-
-
+##  {background-color="black" background-image="https://media2.giphy.com/media/dPINusoxaJi2dU3gML/200.webp?cid=ecf05e472ghokh39348y5t428uk6lus4s0gkaiaqlwkznhuc&ep=v1_gifs_related&rid=200.webp&ct=g" background-size="300px" background-repeat="repeat"}
 
 ## Mixed Methods Research {.r-stretch}
 
@@ -117,9 +112,7 @@ King, Keohane and Verba (KKV) in their classic book, Designing Social Inquiry, a
 
 ## Google trends
 
-
-## Taxonomy of data 
-
+## Taxonomy of data
 
 ## Data formats
 
@@ -156,55 +149,54 @@ R Markdown is a file format for making dynamic documents with R. However, you ne
 
 ### Size:
 
--   `dim(interviews)` - [returns a vector with the number of rows as the first element, and the number of columns as the second element (the dimensions of the object)]{style="color:red;"} 
+-   `dim(df)` - [returns a vector with the number of rows as the first element, and the number of columns as the second element (the dimensions of the object)]{style="color:red;"}
 
--   `nrow(interviews)` - returns the number of rows
--   `ncol(interviews)` - [returns the number of columns
-]{style="colore:red;"}
+-   `nrow(df)` - returns the number of rows
+
+-   `ncol(df)` - [returns the number of columns]{style="colore:red;"}
 
 ### Content:
--   `head(interviews)` - shows the first 6 rows 
 
--   `tail(interviews)` - shows the last 6 rows
+-   `head(df)` - shows the first 6 rows
 
----
+-   `tail(df)` - shows the last 6 rows
+
+------------------------------------------------------------------------
 
 ### Names:
 
--   `names(interviews)` - returns the column names (synonym of colnames() for data.frame objects)
-
-
+-   `names(df)` - returns the column names (synonym of colnames() for data.frame objects)
 
 ### Summary:
 
--   `str(interviews)` - structure of the object and information about the class, length and content of each column 
+-   `str(df)` - structure of the object and information about the class, length and content of each column
 
--   `summary(interviews)` - summary statistics for each column 
+-   `summary(df)` - summary statistics for each column
 
--   `glimpse(interviews)` - returns the number of columns and rows of the tibble, the names and class of each column, and previews as many values will fit on the screen. Unlike the other inspecting functions listed above, glimpse() is not a “base R” function so you need to have the dplyr or tibble packages loaded to be able to execute it.
+-   `glimpse(df)` - returns the number of columns and rows of the tibble, the names and class of each column, and previews as many values will fit on the screen.
+
+## [Data for data]{.flow} 
+
+### Must have Metadata 
 
 
-# Metadata  [Data for data]{.flow}
+## 80% data dealing with these commands {.r-stretch}
 
-## 80% data dealing with these commands {.r-stretch} 
-
-We’re going to learn some of the most common dplyr functions: 
-
+We're going to learn some of the most common dplyr functions:
 
 -   [`select()`: subset columns]{style="color:red;"}
 
--   `filter()`: subset rows on conditions 
- 
--   [`mutate()`: create new columns by using information from other columns]{style="color:red;"} 
+-   `filter()`: subset rows on conditions
 
--   `group_by()` and `summarize()`: create summary statistics on grouped data 
+-   [`mutate()`: create new columns by using information from other columns]{style="color:red;"}
 
--   [`arrange()`: sort results]{style="color:red;"} 
+-   `group_by()` and `summarize()`: create summary statistics on grouped data
+
+-   [`arrange()`: sort results]{style="color:red;"}
 
 -   `count()`: count discrete values
 
-
-##
+## 
 
 ::: callout-warning
 Numbers and numbers which matter are different.
@@ -212,31 +204,10 @@ Numbers and numbers which matter are different.
 
 ## Time-line data
 
-image
+![Finance Ministers Approach](images/timeline.png){.center}
 
 ## Economic Policy uncertainty
 
--   image
+![Economic Policy Uncertainty Index](images/epu_ragg_20X15.png){.center}
 
-
-## {background-color="black" background-image="https://media1.giphy.com/media/92cu6TfCZDVRBkmmDu/giphy.gif?cid=ecf05e47fx13mfnwlup7i5nr1amq03uocrl768itcnx81qf7&ep=v1_gifs_related&rid=giphy.gif&ct=g" background-size="300px" background-repeat="repeat"}
-## Micro-credential benefits
-
-::: columns
-::: {.column width="20%"}
--   In Demand
-
--   Fast
-
--   Stack
-
--   Affordable
-:::
-
-::: {.column width="80%"}
--   Micro-credential fills demands for skills in need
--   Micro-credentials are short term programs
--   Micro-credentials add-up to get a degree
--   Micro-credential are affordable and cost-effective
-:::
-:::
+##  {background-color="black" background-image="https://media1.giphy.com/media/92cu6TfCZDVRBkmmDu/giphy.gif?cid=ecf05e47fx13mfnwlup7i5nr1amq03uocrl768itcnx81qf7&ep=v1_gifs_related&rid=giphy.gif&ct=g" background-size="300px" background-repeat="repeat"}
