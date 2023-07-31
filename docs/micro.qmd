@@ -1,0 +1,151 @@
+---
+title: "Research Workshop Session on Data Analysis"
+author: "[Zahid Asghar](https://zahedasghar.netlify.app)"
+date-format: "DD-MM-YYYY"
+title-block-banner: true
+format: 
+  revealjs:
+    theme: cosmo
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+editor: visual
+---
+
+
+
+# Introduction {.r-stretch}
+
+## Hello!
+
+My name is Zahid Asghar.
+
+{{< fa brands twitter size=1.4xl >}} zahedasghar \| {{< fa brands linkedin size=1.4xl >}} zahidasghar \| {{< fa brands github size=1.4xl >}} zahedasghar \| {{< fa browser size=1.4xl >}} https://zahedasghar.netlify.app
+
+::: {layout-ncol="2"}
+![](images/microcredential.png)
+
+![Zahid Asghar, Director Micro-cred](images/423_zahid.jpg)
+:::
+
+::: notes
+My name is Zahid Asghar. I work as Professor and have been an R user for some time. I am also a digital illustration beginner, as you will see in my presentation today.
+:::
+
+## Better understanding
+
+To better understand, it is desirable that one
+
+-   is somewhat aware of the need for this new initiative
+-   has gone through some universities/institutions scheme of micro-cred.
+
+> And I am open for healthy dialogue and informed dialogue and would love to embrace diversity and accommodate multi-stakeholders.
+
+# About [Micro-credentials]{.flow} {.r-stretch}
+
+## What are microcredentials? {auto-animate="true"}
+
+<center>
+
+Micro-credentials
+
+::: {.fragment .grow .semi-fade-out}
+offer a flexible and cost-effective way for
+:::
+
+::: {.fragment .grow .semi-fade-out}
+individuals to develop new skills and knowledge
+:::
+
+::: {.fragment .grow .semi-fade-out}
+that is directly relevant to
+:::
+
+::: {.fragment .grow .semi-fade-out}
+their career goals
+:::
+
+</center>
+
+## Why micro-credentials?
+
+::: incremental
+-   represent distinct knowledge and skills
+-   demonstrate a level of pathway achievement to employers, co-workers and one's professional network.
+-   offer several benefits to both individuals and organizations.
+-   cost-effective, flexible, scalable ...
+:::
+
+. . .
+
+How can we make play a role in having skill-centric workforce through micro-credentials?
+
+::: notes
+R Markdown is a file format for making dynamic documents with R. However, you need to call it from R to use it, and it was depedentn on knitr. If you're a Python user, it means you need to install R to use R Markdown. Quarto is a tool that you can call from the terminal or command line, and is independent from the computational systems. Quarto supports knitr, and can support others. So, you can think of Quarto as the next generation R Markdown that is fundamentally multilanguage and multiengine.
+:::
+
+# Goals {.r-stretch}
+
+## How to proceed
+
+-   Initially course certificates on science, AI, History, Job oriented through Virtual learning
+-   Three to four members committee (preferably one from)
+
+# Objectives {.r-stretch}
+
+::: callout-note
+It was nice to see you and wish you great success. After meeting you in person and having your thoughts shared during faculty meeting, I think it seems bit unfair to me to replace Prof. Dr. Hasan. So please proceed as per your plan and I have all the support and help.
+:::
+
+## Why certificates and micro-credentials? {background-color="#0298ed"}
+
+-   A micro-credential is a short, competency-based recognition.
+
+    -   Certificates are usually single course out of a bundle while
+    -   micro-credentials are a bundle of courses in certain area (micromaster, data science)
+    -   One is free to select even a single course and then second and so on or complete only part of it This provides immense flexibility unlike time bound degree
+
+## Why certificates and micro-crendetials? {background-color="#0298ed"}
+
+-   Today's drivers of higher education are not industries, governments and workers but Gates, Zerchburg, Dell among many others.
+-   Cutting edge area to 21st century are
+-   Nondegree credentialing
+-   Competency-based education
+-   Nontradtional providers
+-   Innovative partnerships
+
+## Industrial era vs digital era educational challenges {background-color="#0298ed"}
+
+> Industrial era change was slow and it took more than 150 years before its integration with the system in the 1960s. - digital revolution: 24/7 media information and ocean of data are informing government, public and policy makers. - digital technology change is fast as the knowledge economy has a deep impact on higher education. - scale of change is far greater than that of industrial era change because the latter required lectures, seminars and laboratories to work with.
+
+## micro-credentials: scalable {background-color="#0298ed"}
+
+Now digital technology helped to reach 100,000 people in a course and has enabled millions of people to get credentials which were not the case in industrial era higher education. This has created an opportunity for a historically more disadvantaged population and new consumers of education may not look for degrees but some certain skills.
+
+::: incremental
+-   Create computational documents that hold source code for automation and reproducibility
+-   Reduce how difficult it is to make a scientific document
+-   Enable "single-source publishing" --- create Word, PDFs, HTML, etc. from one source
+:::
+
+## Micro-credential benefits
+
+::: columns
+::: {.column width="20%"}
+-   In Demand
+
+-   Fast
+
+-   Stack
+
+-   Affordable
+:::
+
+::: {.column width="80%"}
+-   Micro-credential fills demands for skills in need
+-   Micro-credentials are short term programs
+-   Micro-credentials add-up to get a degree
+-   Micro-credential are affordable and cost-effective
+:::
+:::

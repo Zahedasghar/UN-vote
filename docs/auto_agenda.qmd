@@ -1,0 +1,90 @@
+---
+title: "Reveal auto-agenda"
+subtitle: "Using the `reveal-auto-agenda` quarto extension to automatically create rolling agenda slides"
+author: "Andrie de Vries"
+format: revealjs
+filters: 
+  - reveal-auto-agenda
+auto-agenda:
+   bullets: bullet
+  heading: "Agenda:"
+---
+
+# Motivation
+
+## Why?
+
+To help people follow the logical flow of a presentation, it is useful to show all top level headings in a single agenda slide.
+
+But it can be tedious to construct an agenda slide by hand, by copying all the top level headings.
+
+This extension automatically constructs an agenda slide from the top level headings.
+
+# Mechanics of `reveal-auto-agenda`
+
+## Using the extension
+
+Add this to the yaml header:
+
+``` yaml
+filters: 
+  - reveal-auto-agenda
+```
+
+Then sit back and watch your agenda slide build itself.
+
+## Where does the agenda show up?
+
+The extension inserts the rolling agenda on every slide with H1 heading.
+
+## Can H1 header slides contain content?
+
+No.
+
+Other than the header, leave these slides blank - the agenda will form the content of the slide.
+
+## Customization {.smaller}
+
+You can customize the bullet type (none, bullets or numbered) and optionally add a heading.
+
+``` yaml
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+```
+
+## Customization 2 {.smaller}
+
+You can change these options:
+
+-   `bullets`:
+
+    -   Change the agenda slides to have:
+
+        -   `none`: No bullets or numbers
+        -   `bullets`: Bullet list (the default)
+        -   `numbered`: Numbered list
+
+-   `heading`:
+
+    -   If you set this option, then each agenda slide will have a heading above the agenda list.
+
+    -   Use this to set a heading to "Agenda", "Table of Contents", or similar.
+
+# Don't add agenda {.no-auto-agenda}
+
+If you want to suppress the agenda on a particular slide, add the class `no-auto-agenda` to the slide:
+
+``` md
+# Header {.no-auto-agenda}
+```
+
+
+
+# Have fun
+
+## That's it.
+
+Have fun!

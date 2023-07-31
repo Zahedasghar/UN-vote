@@ -1,0 +1,7 @@
+/*-- scss:rules --*/
+h1.title {
+  background-image: url(images/HSF_germany.jpg), url(images/423_zahid.jpg);
+  background-repeat: no-repeat;
+  background-position: left, right;
+  background-size: 200px, 200px;
+}

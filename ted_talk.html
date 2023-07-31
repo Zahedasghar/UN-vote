@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.299">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Julia Silge">
+
+<title>Text mining with tidy data principles</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ted_talk_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ted_talk_files/libs/quarto-html/quarto.js"></script>
+<script src="ted_talk_files/libs/quarto-html/popper.min.js"></script>
+<script src="ted_talk_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ted_talk_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ted_talk_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ted_talk_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ted_talk_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ted_talk_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ted_talk_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Text mining with tidy data principles</h1>
+<p class="subtitle lead">Learn how to use tidytext!</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Julia Silge </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<p>Text data sets are diverse and ubiquitous, and <strong>tidy data principles</strong> provide an approach to make text mining easier, more effective, and consistent with tools already in wide use. In this tutorial, you will develop your text mining skills using the <a href="https://juliasilge.github.io/tidytext/">tidytext</a> package in R, along with other <a href="https://www.tidyverse.org/">tidyverse</a> tools. You will apply these skills in several case studies, which will allow you to:</p>
+<ul>
+<li>practice important data handling skills,</li>
+<li>learn about the ways text analysis can be applied, and</li>
+<li>extract relevant insights from real-world data.</li>
+</ul>
+<section id="working-through-this-tutorial" class="level3">
+<h3 class="anchored" data-anchor-id="working-through-this-tutorial">Working through this tutorial</h3>
+<p>Throughout this tutorial, you will see code exercises that look like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the tidytext package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the tidytext package</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>(<span class="st">"Be sure to click </span><span class="sc">\"</span><span class="st">Submit Answer </span><span class="sc">\"</span><span class="st"> on exercises throughout the tutorial because there are hints, answers, and other content available to you after you submit."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (check_env) 
+{
+    if (is.list(check_env)) {
+        check_env &lt;- list2env(check_env)
+    }
+    user_code &lt;- check_env$.user_code
+    if (is.null(user_code)) {
+        return(legacy_graded(correct = FALSE, message = "I didn't receive your code. Did you write any?"))
+    }
+    solution_code_all &lt;- check_env$.solution_code_all
+    if (is.null(solution_code_all) || length(str2expression(solution_code_all)) == 
+        0) {
+        solution_code_all &lt;- solutions_prepare(check_env$.solution_code)
+    }
+    if (is.null(solution_code_all) || length(str2expression(solution_code_all)) == 
+        0) {
+        return(legacy_graded(correct = FALSE, message = "No exercise solution provided. Defaulting to _incorrect_."))
+    }
+    message &lt;- code_feedback(user_code = user_code, solution_code = solution_code_all, 
+        user_env = check_env$.envir_result %||% check_env, solution_env = check_env$.envir_solution %||% 
+            check_env, allow_partial_matching = allow_partial_matching)
+    if (is.null(message)) {
+        return(legacy_graded(correct = TRUE, message = glue_message(glue_correct %||% 
+            gradethis_legacy_options$gradethis.glue_correct, 
+            .is_correct = TRUE, .message = NULL, .correct = correct, 
+            .user_code = user_code)))
+    }
+    message &lt;- glue_message(glue_incorrect %||% gradethis_legacy_options$gradethis.glue_incorrect, 
+        .is_correct = FALSE, .message = message, .incorrect = incorrect, 
+        .user_code = user_code)
+    legacy_graded(correct = FALSE, message = message)
+}
+&lt;bytecode: 0x0000025ab8c14d08&gt;
+&lt;environment: 0x0000025ab8c1dad8&gt;</code></pre>
+</div>
+</div>
+<p>You can type in these code exercises. <strong>Give it a try now!</strong> If you mess up, click “Start Over” to get back to the original state. Use the “Run Code” button to see what happens, and click on “Solution” to check out the solution.</p>
+<p>In the exercise above, type <code>library(tidytext)</code> and click “Submit Answer”.</p>
+<p>This tutorial is organized into <strong>four case studies</strong>, each with its own data set:</p>
+<ul>
+<li>transcripts of TED talks</li>
+<li>a collection of comedies and tragedies by Shakespeare</li>
+<li>one month of newspaper headlines</li>
+<li>song lyrics spanning five decades</li>
+</ul>
+<p>These case studies demonstrate how you can use text analysis techniques with diverse kinds of text!</p>
+</section>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<p>To get the most from this tutorial, you should have some familiarity with R and <a href="https://www.tidyverse.org/">tidyverse</a> functions like those from dplyr and ggplot2. If you have read <a href="https://r4ds.had.co.nz/"><em>R for Data Science</em></a> by Hadley Wickham and Garrett Grolemund, you are good to go!</p>
+</section>
+</section>
+<section id="thank-you-for-coming-to-my-ted-talk" class="level2" data-progressive="TRUE">
+<h2 data-progressive="TRUE" class="anchored" data-anchor-id="thank-you-for-coming-to-my-ted-talk">2. Thank you for coming to my TED talk</h2>
+<iframe src="https://giphy.com/embed/495RS6uWPjq008HACu" width="480" height="270" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+<p>
+<a href="https://giphy.com/gifs/usnationalarchives-applause-hollywood-audience-495RS6uWPjq008HACu">via GIPHY</a>
+</p>
+<p>The first case study of this tutorial uses a data set of TED talks created by Katherine M. Kinnaird and John Laudun for their paper <a href="https://doi.org/10.22148/16.042">“TED Talks as Data”</a>. The specific talks we are using are from the main TED event, and the data set was curated in the summer of 2018.</p>
+<p>There are two main pieces of R software we will use in our text analysis work throughout this tutorial, the <a href="https://www.tidyverse.org/">tidyverse</a> metapackage and <a href="https://juliasilge.github.io/tidytext/">tidytext</a>. To clarify for yourself what tools you are using, load the two packages below (first tidyverse, and then tidytext) by replacing the <code>___</code> with the package names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the tidyverse and tidytext packages</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(___)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#library(___)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the tidyverse and tidytext packages</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="ted-talk-transcripts" class="level3">
+<h3 class="anchored" data-anchor-id="ted-talk-transcripts">TED talk transcripts</h3>
+<p>The TED talk transcripts are available to you in a dataframe called <code>ted_talks</code>. There are three variables in this data set:</p>
+<ul>
+<li><code>talk_id</code>: the identifier from the TED website for this particular talk</li>
+<li><code>text</code>: the text of this TED talk</li>
+<li><code>speaker</code>: the main or first listed speaker (some TED talks have more than one speaker)</li>
+</ul>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># glimpse `ted_talks` to see what is in the data set</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#glimpse(___)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># glimpse `ted_talks` to see what is in the data set</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ted_talks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 992
+Columns: 3
+$ talk_id &lt;dbl&gt; 1, 7, 53, 66, 92, 96, 49, 86, 71, 94, 54, 55, 58, 41, 65, 46, …
+$ text    &lt;chr&gt; "Thank you so much, Chris. And it's truly a great honor to hav…
+$ speaker &lt;chr&gt; "Al Gore", "David Pogue", "Majora Carter", "Ken Robinson", "Ha…</code></pre>
+</div>
+</div>
+</section>
+<section id="how-to-tidy-text-data" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-tidy-text-data">How to tidy text data</h3>
+<p>The <code>text</code> data is currently in a dataframe, but it is not <strong>tidy</strong> in the sense of being compatible with tidy tools. We need to transform it so that it is in a different format, with <strong>one observation per row</strong>.</p>
+<p>When we do text analysis, the observations we are interested in aren’t the whole talks at once, but rather individual <em>tokens</em>. A <strong>token</strong> is a meaningful unit of text for analysis; in many cases, this just means a single word. The process of <strong>tokenization</strong> identifies and breaks apart text into individual tokens. You can use <a href="https://juliasilge.github.io/tidytext/reference/unnest_tokens.html">tidytext’s <code>unnest_tokens()</code> function</a> to accomplish all of this at once, both the tidying and the tokenization.</p>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy_talks &lt;- ted_talks %&gt;% </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  ___(word, text)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="ot">&lt;-</span> ted_talks <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tidy-ted-talks" class="level3">
+<h3 class="anchored" data-anchor-id="tidy-ted-talks">Tidy TED talks</h3>
+<p>The <code>unnest_tokens()</code> function transforms non-tidy text data into tidy text data. It takes three arguments:</p>
+<ul>
+<li>the input dataframe that contains your text (often you will use the pipe <code>%&gt;%</code> to send this argument to <code>unnest_tokens()</code>),</li>
+<li>the output column that you want to unnest <em>to</em>, and</li>
+<li>the input column that you want to unnest <em>from</em>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tidy_talks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,005,342 × 3
+   talk_id speaker word 
+     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+ 1       1 Al Gore thank
+ 2       1 Al Gore you  
+ 3       1 Al Gore so   
+ 4       1 Al Gore much 
+ 5       1 Al Gore chris
+ 6       1 Al Gore and  
+ 7       1 Al Gore it's 
+ 8       1 Al Gore truly
+ 9       1 Al Gore a    
+10       1 Al Gore great
+# ℹ 2,005,332 more rows</code></pre>
+</div>
+</div>
+<p>What did <code>unnest_tokens()</code> do here? Instead of having 992 rows and reading each talk across the line in <code>text</code>, we now have 2,005,342 rows and can read each talk <em>down</em> the column in <code>word</code>. We have <strong>tokenized</strong> and <strong>tidied</strong> the text, as well as a few other transformations:</p>
+<ul>
+<li>Other columns have been retained.</li>
+<li>Punctuation has been stripped out.</li>
+<li>Words have been converted to lower-case.</li>
+</ul>
+<p>These are defaults in the function that can be changed, if not appropriate to your analysis.</p>
+</section>
+<section id="tokenize-to-bigrams" class="level3">
+<h3 class="anchored" data-anchor-id="tokenize-to-bigrams">Tokenize to bigrams</h3>
+<p>We said before that tokenization is the process of identifying and breaking apart text into <strong>tokens</strong>, meaningful units of text; those meaningful units of text are most often single words in text analysis but they do not have to be! We can move beyond single words to other kinds of tokens, like <strong>n-grams</strong>. An n-gram is a consecutive sequence of <code>n</code> words. Let’s look at these TED talks and tokenize to bigrams, n-grams of order 2.</p>
+<ul>
+<li>Use the same function for tokenizing and tidying to create the bigrams.</li>
+</ul>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ted_bigrams &lt;- ted_talks %&gt;% </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  ___(bigram, text, token = "ngrams", n = 2)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#ted_bigrams</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ted_bigrams <span class="ot">&lt;-</span> ted_talks <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigram, text, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ted_bigrams</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,004,350 × 3
+   talk_id speaker bigram     
+     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1 Al Gore thank you  
+ 2       1 Al Gore you so     
+ 3       1 Al Gore so much    
+ 4       1 Al Gore much chris 
+ 5       1 Al Gore chris and  
+ 6       1 Al Gore and it's   
+ 7       1 Al Gore it's truly 
+ 8       1 Al Gore truly a    
+ 9       1 Al Gore a great    
+10       1 Al Gore great honor
+# ℹ 2,004,340 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="most-common-ted-talk-words" class="level3">
+<h3 class="anchored" data-anchor-id="most-common-ted-talk-words">Most common TED talk words</h3>
+<p>Let’s go back to single words. Now that our data in a tidy format, a whole world of analysis opportunity has opened up for us. We can start by computing term frequencies in just one line. What are the <strong>most common words</strong> in these TED talks?</p>
+<ul>
+<li>Use <code>count()</code> to find the most common words.</li>
+</ul>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy_talks %&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># ___(word, sort = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 41,303 × 2
+   word      n
+   &lt;chr&gt; &lt;int&gt;
+ 1 the   93853
+ 2 and   67710
+ 3 to    57089
+ 4 of    52313
+ 5 a     49129
+ 6 that  39019
+ 7 in    34728
+ 8 i     32793
+ 9 you   30013
+10 is    28569
+# ℹ 41,293 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="removing-stop-words" class="level3">
+<h3 class="anchored" data-anchor-id="removing-stop-words">Removing stop words</h3>
+<p>Words like “the”, “and”, and “to” that aren’t very interesting for a text analysis are called <strong>stop words</strong>. Often the best choice is to remove them. The tidytext package provides access to stop word lexicons, with a default list and then other options and other languages.</p>
+<ul>
+<li>First, run the code the way it is.</li>
+<li>Next, try out the <code>language</code> argument, which takes two-letter language abbreviations like <code>"es"</code>.</li>
+</ul>
+<p>When text data is in a tidy format, stop words can be removed using an <a href="https://dplyr.tidyverse.org/reference/filter-joins.html"><code>anti_join()</code></a>. This type of join will “filter” or remove items that are in the right-hand side, keeping those in the left-hand side.</p>
+<ul>
+<li>Within the <code>anti_join()</code>, add the call to <code>get_stopwords()</code>.</li>
+<li>Add the arguments to <code>count()</code> so we count up words and sort them with the largest groups at the top.</li>
+</ul>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy_talks %&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># anti_join(___) %&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># count(___)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 41,129 × 2
+   word       n
+   &lt;chr&gt;  &lt;int&gt;
+ 1 can     9522
+ 2 one     7995
+ 3 like    7739
+ 4 people  7123
+ 5 now     6756
+ 6 just    6701
+ 7 going   5633
+ 8 know    5467
+ 9 think   4981
+10 see     4760
+# ℹ 41,119 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-top-words" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-top-words">Visualize top words</h3>
+<p>Because we are using tidyverse tools, we can fluently pipe from the kind of code we just wrote straight to ggplot2 functions. One of the significant benefits of using tidy data principles is consistency with widely-used tools that are broadly supported.</p>
+<ul>
+<li>Remove stop words (the default list) via an <code>anti_join()</code>.</li>
+<li>Create a plot with <code>n</code> on the x-axis and <code>word</code> on the y-axis.</li>
+</ul>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy_talks %&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove stop words</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ___ %&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  count(word, sort = TRUE) %&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a> <span class="co"># slice_max(n, n = 20) %&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a> <span class="co"># mutate(word = reorder(word, n)) %&gt;%</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># put `n` on the x-axis and `word` on the y-axis</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a> <span class="co"># ggplot(aes(___, ___)) +</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a> <span class="co"># geom_col()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove stop words</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># put `n` on the x-axis and `word` on the y-axis</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, word)) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="ted_talk_files/figure-html/stop-word-viz-solution-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="compare-ted-talk-vocabularies" class="level3">
+<h3 class="anchored" data-anchor-id="compare-ted-talk-vocabularies">Compare TED talk vocabularies</h3>
+<p>One of my favorite approaches to text analysis is to compare how different people or groups use language. There are lots of different ways to do this, but you can start with plain old word counts! Let’s look at two TED talk speakers, <a href="https://en.wikipedia.org/wiki/Jane_Goodall">Jane Goodall</a> and <a href="https://en.wikipedia.org/wiki/Temple_Grandin">Temple Grandin</a>, and count up the words they used in their TED talks.</p>
+<p><em>If you want to explore other speakers, switch out for different speakers’ names from the data set and hit “Run Code”, after finishing the exercise.</em></p>
+<ul>
+<li>Use <code>filter()</code> to keep only the words spoken by Jane Goodall and Temple Grandin.</li>
+<li>Remove the default list of stop words.</li>
+<li>Use <code>count()</code> with two arguments to count up the term frequencies by <code>speaker</code> and <code>word</code>. (These first three steps could actually be completed in any order but this makes most sense to me.)</li>
+<li>Come back and <code>filter()</code> again to only keep words spoken at least 10 times by both women.</li>
+</ul>
+<p>The function <a href="https://tidyr.tidyverse.org/reference/pivot_wider.html"><code>pivot_wider()</code> from tidyr</a> pivots the long, tidy dataframe to a wide dataframe so we can more easily compare the two speakers’ word counts.</p>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy_talks %&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># ___(speaker %in% c("Jane Goodall", "Temple Grandin")) %&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove stop words</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a> <span class="co"># ___ %&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># count with two arguments</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a> <span class="co"># ___ %&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#group_by(word) %&gt;%</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#___(sum(n) &gt; 10) %&gt;%</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ungroup() %&gt;%</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#pivot_wider(names_from = "speaker", values_from = "n", values_fill = 0) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(speaker <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Jane Goodall"</span>, <span class="st">"Temple Grandin"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove stop words</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># count with two arguments</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(speaker, word) <span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">sum</span>(n) <span class="sc">&gt;</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"speaker"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 49 × 3
+   word        `Jane Goodall` `Temple Grandin`
+   &lt;chr&gt;                &lt;int&gt;            &lt;int&gt;
+ 1 animals                 13                3
+ 2 around                  15                4
+ 3 can                     31               16
+ 4 chimpanzees             13                0
+ 5 different               13               13
+ 6 get                      5               16
+ 7 go                      11                5
+ 8 going                   11               20
+ 9 good                     7                5
+10 got                      6               26
+# ℹ 39 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-vocabulary-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-vocabulary-comparison">Visualize vocabulary comparison</h3>
+<p>It’s interesting to look at the numbers themselves, but this would be better as a <strong>visualization</strong>. We can put one speaker on the x-axis and the other on the y-axis to compare their word counts. Words that appear close to the <code>slope = 1</code> line are used about evenly by both (since the talks were about the same length) and words far away are used more by one speaker.</p>
+<ul>
+<li>Load the <a href="https://ggrepel.slowkow.com/">ggrepel</a> package, for better plotting of text labels.</li>
+<li>Use <code>geom_text_repel()</code> to place the text annotations on the plot.</li>
+</ul>
+<div class="cell" data-exercise="true">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(___)</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(speaker <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Jane Goodall"</span>, <span class="st">"Temple Grandin"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(speaker, word) <span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">sum</span>(n) <span class="sc">&gt;</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"speaker"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="st">`</span><span class="at">Jane Goodall</span><span class="st">`</span>, <span class="st">`</span><span class="at">Temple Grandin</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">"gray50"</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use the special ggrepel geom for nicer text plotting</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(<span class="fu">aes</span>(<span class="at">label =</span> word)) <span class="sc">+</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>tidy_talks <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(speaker <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Jane Goodall"</span>, <span class="st">"Temple Grandin"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(<span class="fu">get_stopwords</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(speaker, word) <span class="sc">%&gt;%</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">sum</span>(n) <span class="sc">&gt;</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"speaker"</span>, <span class="at">values_from =</span> <span class="st">"n"</span>, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="st">`</span><span class="at">Jane Goodall</span><span class="st">`</span>, <span class="st">`</span><span class="at">Temple Grandin</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">"gray50"</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use the special ggrepel geom for nicer text plotting</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> word)) <span class="sc">+</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="ted_talk_files/figure-html/ted-final-viz-solution-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

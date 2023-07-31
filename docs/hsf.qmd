@@ -1,0 +1,239 @@
+---
+title: "[QnQ Data Analysis]{.flow}"
+subtitle: "HSF Research Fellows"
+author: "[[Zahid Asghar, Professor, School of Economics, QAU](https://zahedasghar.netlify.app)]{style=color:blue;}"
+date-format: "DD-MM-YYYY"
+format: 
+  revealjs:
+    theme: [default, custom.css,styles.scss]
+    title-slide-attributes:
+      data-background-image: images/HSF_germany.jpg
+      data-background-size: 20%
+      data-background-position: 100% 100%
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+editor: visual
+---
+
+## {background-color="black" background-image="https://media2.giphy.com/media/dPINusoxaJi2dU3gML/200.webp?cid=ecf05e472ghokh39348y5t428uk6lus4s0gkaiaqlwkznhuc&ep=v1_gifs_related&rid=200.webp&ct=g" background-size="300px" background-repeat="repeat"}
+
+
+
+
+
+
+## Mixed Methods Research {.r-stretch}
+
+-   [What is mixed methods research?]{style="color:blue;"}
+-   Qualitative data analysis
+-   [Quantitative data analysis]{style="color:blue;"}
+-   How these two complement each other?
+
+## Sources
+
+::: incremental
+-   [Pakistan Election data sets](https://github.com/colincookman)
+-   [Colin Cookman Paper on Pakistan elections](https://github.com/colincookman/pakistan_elections/tree/master/paper)
+-   [R for political science](https://rforpoliticalscience.com/)
+-   [Steven V. Miller](http://svmiller.com/)
+-   [Learn qualitative data interactively](https://juliasilge.shinyapps.io/learntidytext/#section-introduction) [World Politics Data Lab](https://worldpoliticsdatalab.org/text-as-data/what-is-the-un-general-debate-why-should-we-study-this-yearly-event/)
+-   [NTI Nuclear Security Index](https://www.ntiindex.org/use-the-nti-index-in-your-classroom/#section-download-resources)
+-   [Google trends](https://trends.google.com/trends/)
+-   [APIs for social scientists](https://bookdown.org/paul/apis_for_social_scientists/)
+:::
+
+## Softwares
+
+::: incremental
+-   Nvivo for qualitative data , easy to learn
+
+-   [Voyant tools](https://voyant-tools.org/)
+
+-   MsExcel , basic daily tool
+
+-   SPSS, STATA for quantitative data analysis
+
+-   R : open community software, have a relatively steep learning curve but awesome and most widely used by political scientists both for qualitative and quantitative analysis
+
+-   Python: open community software, very comprehensive ranging from computer scientists to engineering
+
+-   R or Python are highly recommend for long term
+:::
+
+## Why my choice is R
+
+![](images/rmd.png){.center}
+
+## What are mixed-methods research? {auto-animate="true"}
+
+<center>
+
+Mixed methods research
+
+::: {.fragment .grow .semi-fade-out}
+offers a process of discovery through rigorous [qualitative analysis]{.flow},
+:::
+
+::: {.fragment .grow .semi-fade-out}
+and then empirically investigate it through [quantitative analysis]{.flow}.
+:::
+
+::: {.fragment .grow .semi-fade-out}
+It is often used misleadingly and
+:::
+
+::: {.fragment .grow .semi-fade-out}
+used as a [jargon]{style="color:red;"} instead of getting [benefiting]{style="color:red;"} from it.
+:::
+
+</center>
+
+::: notes
+King, Keohane and Verba (KKV) in their classic book, Designing Social Inquiry, argue that both qualitative and quantitative research should abide by the same standards of logical inference. This is true that qualitative research should be conducted rigorously but valid for inference or not is contestable. Yuen Yuen Ang, author of China's Gilded Age, pointed out that "before one jumps to causal arguments, one must discover an interesting problem and/ or possible solutions. For example, in cancer studies, medical scientists must first have discovered the ailment of cancer, described its manifestations, and speculated about its possible causes, before future generations of scientists could test a particular cause of cancer using statistical data and regressions. In social sciences,discovery, through observation and immersion is indispensable. Without rigorous analysis , discovery of the issue is not possible and if the issue is not well understood, how can it be tested? But unfortunately, most of the qualitative research is descriptive and there is no connection between the two approaches." \` As per my understanding if someone is using : DISCOVERY through rigorous qualitative research and then testing using a quantitative approach. Unfortunately, most of the research studies simply mention some interviews and then there is neither rigorous analysis nor any problem identification."
+:::
+
+## Text Analysis Process {.r-stretch}
+
+::: columns
+::: {.column width="44%"}
+![](https://i0.wp.com/www.bytesview.com/blog/wp-content/uploads/2021/03/Unstructured-text-processing-steps-.png?w=813&ssl=1){height="400"}
+:::
+
+::: {.column width="55%"}
+![](https://i0.wp.com/www.bytesview.com/blog/wp-content/uploads/2021/03/text-analysis-techniques.jpg?w=813&ssl=1){height="400"}
+:::
+:::
+
+------------------------------------------------------------------------
+
+![Industry Application of Text Analysis](https://i0.wp.com/www.bytesview.com/blog/wp-content/uploads/2021/03/industry-applications-.png?w=812&ssl=1)
+
+![](https://i0.wp.com/www.bytesview.com/blog/wp-content/uploads/2021/03/BytesView.png?w=1198&ssl=1)
+
+## Google trends
+
+
+## Taxonomy of data 
+
+
+## Data formats
+
+::: incremental
+-   **.csv, .txt, .dta , .sav, .xlsx, .RData, ...**
+
+-   **Reading and saving/writing each ...**
+
+-   **parameterized reports cricket_batting data analytics reposity**
+
+-   **Toshakhana data cleaning**
+:::
+
+# About [Qualitative Data]{.flow} {.r-stretch}
+
+## Text Analysis
+
+::: incremental
+-   represent distinct knowledge and skills
+-   demonstrate a level of pathway achievement to employers, co-workers and one's professional network.
+-   offer several benefits to both individuals and organizations.
+-   cost-effective, flexible, scalable ...
+:::
+
+. . .
+
+How can we make play a role in having skill-centric workforce through micro-credentials?
+
+::: notes
+R Markdown is a file format for making dynamic documents with R. However, you need to call it from R to use it, and it was depedentn on knitr. If you're a Python user, it means you need to install R to use R Markdown. Quarto is a tool that you can call from the terminal or command line, and is independent from the computational systems. Quarto supports knitr, and can support others. So, you can think of Quarto as the next generation R Markdown that is fundamentally multilanguage and multiengine.
+:::
+
+## Inspecting data frames
+
+### Size:
+
+-   `dim(interviews)` - [returns a vector with the number of rows as the first element, and the number of columns as the second element (the dimensions of the object)]{style="color:red;"} 
+
+-   `nrow(interviews)` - returns the number of rows
+-   `ncol(interviews)` - [returns the number of columns
+]{style="colore:red;"}
+
+### Content:
+-   `head(interviews)` - shows the first 6 rows 
+
+-   `tail(interviews)` - shows the last 6 rows
+
+---
+
+### Names:
+
+-   `names(interviews)` - returns the column names (synonym of colnames() for data.frame objects)
+
+
+
+### Summary:
+
+-   `str(interviews)` - structure of the object and information about the class, length and content of each column 
+
+-   `summary(interviews)` - summary statistics for each column 
+
+-   `glimpse(interviews)` - returns the number of columns and rows of the tibble, the names and class of each column, and previews as many values will fit on the screen. Unlike the other inspecting functions listed above, glimpse() is not a “base R” function so you need to have the dplyr or tibble packages loaded to be able to execute it.
+
+
+# Metadata  [Data for data]{.flow}
+
+## 80% data dealing with these commands {.r-stretch} 
+
+We’re going to learn some of the most common dplyr functions: 
+
+
+-   [`select()`: subset columns]{style="color:red;"}
+
+-   `filter()`: subset rows on conditions 
+ 
+-   [`mutate()`: create new columns by using information from other columns]{style="color:red;"} 
+
+-   `group_by()` and `summarize()`: create summary statistics on grouped data 
+
+-   [`arrange()`: sort results]{style="color:red;"} 
+
+-   `count()`: count discrete values
+
+
+##
+
+::: callout-warning
+Numbers and numbers which matter are different.
+:::
+
+## Time-line data
+
+image
+
+## Economic Policy uncertainty
+
+-   image
+
+
+## {background-color="black" background-image="https://media1.giphy.com/media/92cu6TfCZDVRBkmmDu/giphy.gif?cid=ecf05e47fx13mfnwlup7i5nr1amq03uocrl768itcnx81qf7&ep=v1_gifs_related&rid=giphy.gif&ct=g" background-size="300px" background-repeat="repeat"}
+## Micro-credential benefits
+
+::: columns
+::: {.column width="20%"}
+-   In Demand
+
+-   Fast
+
+-   Stack
+
+-   Affordable
+:::
+
+::: {.column width="80%"}
+-   Micro-credential fills demands for skills in need
+-   Micro-credentials are short term programs
+-   Micro-credentials add-up to get a degree
+-   Micro-credential are affordable and cost-effective
+:::
+:::

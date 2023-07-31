@@ -1,0 +1,106 @@
+---
+title: "[R made easy ]{.flow}"
+subtitle: "R-101 Video#3 "
+format:
+  revealjs:
+    theme: [default, custom.scss, styles.scss]
+    #logo: "https://e7.pngegg.com/pngimages/45/628/png-clipart-programming-language-computational-statistics-rstudio-others-blue-angle.png"
+    css: logo.css
+    chalkboard: true
+    title-slide-attributes:
+      data-background-image: images/bbplot.png
+      data-background-size: cover
+      #data-background-position: 0% 95%
+      background-opacity: "1.30"
+      data-background-color: "white"
+overview: true
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+resources:
+  - slides.pdf
+editor: visual
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(httr)
+clrs <- MetBrewer::met.brewer(name = "Java")
+clrs_lt <- colorspace::lighten(clrs, 0.9)
+knitr::opts_chunk$set(fig.retina = 3, collapse = TRUE)
+options(digits = 3, width = 75)
+```
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(kableExtra)
+library(patchwork)
+library(fontawesome)
+library(gapminder)
+library(scales)
+```
+
+## [ggplot2]{.flow} ![](images/bbplot.png){background-color="#0298ed"}
+
+
+
+
+# 
+
+
+### arrange()
+
+### select()
+
+### mutate()
+
+### filter()
+
+### summarise()
+
+## [Read data in R]{.flow} {background-color="#0298ed"}
+
+### csv file, package `readr`
+
+### excel file `readxl`
+
+### stata file `haven`
+
+### spss file `haven`
+
+## [Clean Names (janitor)]{.flow} {background-color="#0298ed"}
+
+### janitor package for data cleaning
+
+##
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+1. First
+
+. . .
+
+2. Second
+
+:::
+
+::: {.column width="50%"}
+
+3. Third
+
+. . .
+
+```{r}
+head(mtcars)
+. . .
+
+Forth
+:::
+
+::::
+

@@ -1,0 +1,94 @@
+---
+title: "Research Workshop Session on Data Analysis"
+author: "[Zahid Asghar](https://zahedasghar.netlify.app)"
+date: last-modified
+date-format: "DD-MM-YYYY"
+title-block-banner: "#27455C"
+format: 
+  html:
+    embed-resources: true
+    smooth-scroll: true
+    theme: theme.scss
+    fontcolor: black
+    toc: true
+    toc-location: left
+    toc-title: Summary
+    toc-depth: 3
+css: logo1.css
+execute: 
+  warning: false
+  freeze: auto
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Mixed methods Research Data Analysis
+
+> As per my understanding if someone is using : DISCOVERY through
+> rigorous qualitative research and then testing using a quantitative
+> approach. Unfortunately, most of the research studies simply mention
+> some interviews and then there is neither rigorous analysis nor any
+> problem identification.
+
+## Objectives
+
+-   Understanding mixed method approach.
+
+-   Analyzing qualitative and quantitative data.
+
+-   Understanding to analyze textual, sentimental, N-Gram: correlations
+
+-   Understand important elements of data, like central tendency and
+    spread in practice
+
+-   Correlation, Regression, and Hypothesis testing in practice
+
+-   Becoming familiar with use of R (without downloading and with zero
+    coding experience), Excel and datwrapper
+
+## Session 1
+
+All data, codes, slides and other material will be available freely for all participants on web cloud  during and after the training. It is highly desirable if participants have laptops and high speed internet to practice in the last half an hour of each session. 
+### Introduction to softwares
+
+|                                              |                                        |                                       |
+|------------------|------------------|------------------|
+| Introduction to softwares: R, SPSS, STATA, NVIVO | With some general benefits of each of these | Why open community softwares and how these |
+
+-   Understanding packages and libraries in R/RStudio Cloud 
+
+### Qualitative data analysis in R (Posit Cloud)
+
+-   Process of working with text data
+
+-   Word frequencies and Word network with n-grams
+
+-   Stop word: removing noise from the data
+
+-   Exploring correlations
+
+-   Twitter/Sentimental analysis
+
+### Quantitative Data Analysis
+
+**Keywords**: constant/variable, nominal/ordinal/interval variable,
+dummy variable, Likert item, mode/median/mean.(independent, dependent)
+variable, (positive, negative, zero, curvilinear) relationship,
+cross-tabulation, mean comparison
+
+### Correlation and Linear Regression with Real Data
+
+**Keywords**: correlation, scatterplot, Pearson's r, multicollinearity,
+(multiple) regression, regression coefficient, standard error,
+prediction error, "ordinary least squares", partial effects, interactive
+effects.
+
+## New ways of having data and analyzing
+
+### Analyzing Google Trends, Google News API, Media API
+
+Discussion of various sources from where one can read all data directly
+from web API. - Google trends - Google news API - Media API - UN votes
+data from 1948-49 on 6 key issues directly from API till to-date
+(Comparing Pakistan and India ) - Participants feedback for way forward

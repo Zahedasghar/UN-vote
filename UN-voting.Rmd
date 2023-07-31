@@ -1,0 +1,138 @@
+---
+title: "UN-voting"
+author: "Zahid Asghar"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# United Nations General Assembly Voting Data Analysis
+
+## Explore the data
+
+You can download this data^[Erik Voeten "Data and Analyses of Voting in the UN General Assembly" Routledge Handbook of International Organization, edited by Bob Reinalda (published May 27, 2013)]
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(unvotes)
+library(dplyr)
+library(lubridate)
+library(ggthemes)
+library(tidyr)
+library(kableExtra)
+library(knitr)
+library(DT)
+```
+There are three files. `un_votes`, `un_roll_calls` and `un-issues`. Details of these files can be obtained from the following command.
+
+```{r}
+glimpse(un_votes)
+glimpse(un_roll_calls)
+glimpse(un_roll_call_issues)
+```
+The first file `un_vote` contains information on history of each country's vote. Second file is about each country roll call including date, un resolution and description. Finally, the third file about important issues for voting. Six main issues listed are : 
+ 
+“Palestinian conflict”, “Nuclear weapons and nuclear material”, “Arms control and disarmament”, “Human rights”, “Colonialism” and “Economic development”.
+
+First 10 rows of each three data sets are displayed as follows;
+
+### un_votes 
+
+```{r}
+un_votes[1:10,] %>%kable()%>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+### un_roll_calls 
+
+```{r}
+un_roll_calls[1:10,] %>%kable()%>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+### un_roll_call_issues
+
+
+```{r}
+un_roll_call_issues[1:10,] %>%kable()%>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+
+## First, which issue(issues) have been voted the most?
+
+```{r}
+un_roll_call_issues %>% count(issue, sort=TRUE)%>%kable()%>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+
+## How often a country voted “yes” from 1946 to 2015?
+
+```{r}
+by_country <- un_votes %>% group_by(country) %>% summarize(votes = n(),
+pct_yes = mean(vote == 'yes'))
+by_country[1:10,]%>%kable()%>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+## Percentage yes vote high countries from 1946 to 2015
+
+```{r}
+datatable(arrange(by_country, desc(pct_yes)))
+```
+
+## Percentage yes vote high countries and years
+
+```{r}
+join1 <- un_votes %>% inner_join(un_roll_calls, by = 'rcid')
+by_country_year <- join1 %>% group_by(country, year=year(date)) %>% summarise(votes=n(), pct_yes = mean(vote=='yes'))
+datatable(arrange(by_country_year, desc(pct_yes)))
+
+```
+
+## Percentage yes vote low countries and years
+
+```{r}
+datatable(by_country_year[order(by_country_year$pct_yes),])
+
+```
+
+## Let’s look at three countries – Pakistan and India’s “Yes” vote trend in percent over year.
+
+```{r}
+countries <- c( 'India', 'Pakistan')
+by_country_year %>% filter(country %in% countries) %>% 
+  ggplot(aes(x=year, y=pct_yes, color=country)) + geom_line() + 
+  ylab("% of votes are 'Yes'") + ggtitle("Trend in percentage Yes Votes of India and Pakistan 1946-2015") + theme_bw()
+
+```
+## Voting pattern overtime by the above three countries on 6 issues?
+
+```{r, echo=FALSE}
+join1 %>% filter(country %in% countries) %>% 
+  inner_join(un_roll_call_issues, by='rcid') %>% 
+  group_by(year=year(date), country, issue) %>% 
+  summarise(votes=n(), pct_yes=mean(vote=='yes')) %>% 
+  ggplot(aes(x=year, y=pct_yes, color=country)) + 
+  geom_point() + 
+  geom_smooth(se=FALSE) + facet_wrap(~issue) + ylab("% of votes are 'Yes'") +
+  ggtitle('Trend in Percentage Yes Votes by Issues for  India and Pakistan')
+
+```
+
+
+```{r}
+join2 <- join1 %>% filter(country %in% countries) %>% 
+  inner_join(un_roll_call_issues, by='rcid') %>% 
+  group_by(country, issue) %>% 
+  summarise(votes=n(), pct_yes=mean(vote=='yes'))
+
+ggplot(aes(x=country, y=pct_yes, fill = issue), data = join2) + geom_bar(stat = 'identity', position = position_dodge()) + ggtitle('India and Pakistan the UN Issues')
+
+```
+
