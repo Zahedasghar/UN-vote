@@ -62,7 +62,11 @@ editor: visual
 
 ## Why my choice is R
 
-![](images/rmd.png){.center}
+![](images/rmd.png){.center width="498"}
+
+::: notes
+R Markdown is a file format for making dynamic documents with R. However, you need to call it from R to use it, and it was depedentn on knitr. If you're a Python user, it means you need to install R to use R Markdown. Quarto is a tool that you can call from the terminal or command line, and is independent from the computational systems. Quarto supports knitr, and can support others. So, you can think of Quarto as the next generation R Markdown that is fundamentally multilanguage and multiengine.
+:::
 
 ## What are mixed-methods research? {auto-animate="true"}
 
@@ -83,7 +87,7 @@ It is often used misleadingly and
 :::
 
 ::: {.fragment .grow .semi-fade-out}
-used as a [jargon]{style="color:red;"} instead of getting [benefiting]{style="color:red;"} from it.
+used as a [jargon]{style="color:red;"} instead of [utilising]{style="color:red;"} it.
 :::
 
 </center>
@@ -92,7 +96,33 @@ used as a [jargon]{style="color:red;"} instead of getting [benefiting]{style="co
 King, Keohane and Verba (KKV) in their classic book, Designing Social Inquiry, argue that both qualitative and quantitative research should abide by the same standards of logical inference. This is true that qualitative research should be conducted rigorously but valid for inference or not is contestable. Yuen Yuen Ang, author of China's Gilded Age, pointed out that "before one jumps to causal arguments, one must discover an interesting problem and/ or possible solutions. For example, in cancer studies, medical scientists must first have discovered the ailment of cancer, described its manifestations, and speculated about its possible causes, before future generations of scientists could test a particular cause of cancer using statistical data and regressions. In social sciences,discovery, through observation and immersion is indispensable. Without rigorous analysis , discovery of the issue is not possible and if the issue is not well understood, how can it be tested? But unfortunately, most of the qualitative research is descriptive and there is no connection between the two approaches." \` As per my understanding if someone is using : DISCOVERY through rigorous qualitative research and then testing using a quantitative approach. Unfortunately, most of the research studies simply mention some interviews and then there is neither rigorous analysis nor any problem identification."
 :::
 
-## Text Analysis Process {.r-stretch}
+## How many Russian soldiers died in Ukraine-Russia war?
+
+-   Russia reports around 6000
+
+-   If you challenge it, how will you proceed
+
+-   Interviews, FGD for some information
+
+> Once some clues of under-reporting through rigrous exploration, how will you assess the actual number?
+
+------------------------------------------------------------------------
+
+### [Data shows what Moscow hides]{.flow}
+
+[for details click her](https://apnews.com/article/russia-ukraine-war-military-deaths-facd75c2311ed7be660342698cf6a409)
+
+::: incremental
+-   [**Visit cemeteries for deaths under 50 yrs**]{style="color:blue;"}
+
+-   **Adjustment for covid deaths**
+
+-   [**Get data on new inheritance accounts opened**]{style="color:blue;"}
+
+-   [**Started with interviewing, discussion, anecdotes, personal interviews and discovered underreporting by Russia, collected quantitative data and analyzed whether its really the case. This is one of the objectives of mixed-method research approach .**]{style="color:brown;"}
+:::
+
+## Qualitative Data Analysis {.r-stretch}
 
 ::: columns
 ::: {.column width="44%"}
@@ -110,39 +140,32 @@ King, Keohane and Verba (KKV) in their classic book, Designing Social Inquiry, a
 
 ![](https://i0.wp.com/www.bytesview.com/blog/wp-content/uploads/2021/03/BytesView.png?w=1198&ssl=1)
 
-## Google trends
+## 
 
-## Taxonomy of data
+::: {.incremental style="color: blue"}
+-   [**Google trends**](https://trends.google.com/trends/explore?date=today%205-y&geo=PK&q=%2Fg%2F11gbstjk1r,Babar%20Azam&hl=en)
+
+-   **Text Analysis**
+
+-   **Sentimental Analysis**
+
+-   **Taxonomy of data**
+
+-   **Metadata**
+:::
 
 ## Data formats
 
 ::: incremental
--   **.csv, .txt, .dta , .sav, .xlsx, .RData, ...**
+-   [**.csv, .txt, .dta , .sav, .xlsx, .RData, ...**]{style="color:red;\""}
 
 -   **Reading and saving/writing each ...**
 
--   **parameterized reports cricket_batting data analytics reposity**
+-   [**parameterized reports cricket_batting data analytics reposity**]{style="color:red;\""}
 
 -   **Toshakhana data cleaning**
-:::
 
-# About [Qualitative Data]{.flow} {.r-stretch}
-
-## Text Analysis
-
-::: incremental
--   represent distinct knowledge and skills
--   demonstrate a level of pathway achievement to employers, co-workers and one's professional network.
--   offer several benefits to both individuals and organizations.
--   cost-effective, flexible, scalable ...
-:::
-
-. . .
-
-How can we make play a role in having skill-centric workforce through micro-credentials?
-
-::: notes
-R Markdown is a file format for making dynamic documents with R. However, you need to call it from R to use it, and it was depedentn on knitr. If you're a Python user, it means you need to install R to use R Markdown. Quarto is a tool that you can call from the terminal or command line, and is independent from the computational systems. Quarto supports knitr, and can support others. So, you can think of Quarto as the next generation R Markdown that is fundamentally multilanguage and multiengine.
+-   [**tidy vs untidy data**]{style="color:red;\""}
 :::
 
 ## Inspecting data frames
@@ -153,7 +176,7 @@ R Markdown is a file format for making dynamic documents with R. However, you ne
 
 -   `nrow(df)` - returns the number of rows
 
--   `ncol(df)` - [returns the number of columns]{style="colore:red;"}
+-   `ncol(df)` - [returns the number of columns]{style="color:red;"}
 
 ### Content:
 
@@ -171,14 +194,9 @@ R Markdown is a file format for making dynamic documents with R. However, you ne
 
 -   `str(df)` - structure of the object and information about the class, length and content of each column
 
--   `summary(df)` - summary statistics for each column
+-   `summary(df)` - [summary statistics for each column]{style="color:red;\""}
 
 -   `glimpse(df)` - returns the number of columns and rows of the tibble, the names and class of each column, and previews as many values will fit on the screen.
-
-## [Data for data]{.flow} 
-
-### Must have Metadata 
-
 
 ## 80% data dealing with these commands {.r-stretch}
 
@@ -196,15 +214,22 @@ We're going to learn some of the most common dplyr functions:
 
 -   `count()`: count discrete values
 
-## 
+##
 
-::: callout-warning
-Numbers and numbers which matter are different.
+::: {.callout-warning style="color: red"}
+## **Numbers and numbers which matter are different.**
+
+
+
 :::
+
+
+
+{{< video https://youtu.be/QKLvGvS1qGQ >}}
 
 ## Time-line data
 
-![Finance Ministers Approach](images/timeline.png){.center}
+![Finance Ministers Approach](images/timeline.png){.center width="715"}
 
 ## Economic Policy uncertainty
 

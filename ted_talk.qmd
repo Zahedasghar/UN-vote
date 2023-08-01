@@ -94,11 +94,7 @@ These case studies demonstrate how you can use text analysis techniques with div
 
 There are two main pieces of R software we will use in our text analysis work throughout this tutorial, the [tidyverse](https://www.tidyverse.org/) metapackage and [tidytext](https://juliasilge.github.io/tidytext/). To clarify for yourself what tools you are using, load the two packages below (first tidyverse, and then tidytext) by replacing the `___` with the package names.
 
-```{r }
-# load the tidyverse and tidytext packages
-#library(___)
-#library(___)
-```
+
 
 ```{r }
 # load the tidyverse and tidytext packages
@@ -116,10 +112,7 @@ The TED talk transcripts are available to you in a dataframe called `ted_talks`.
 - `text`: the text of this TED talk
 - `speaker`: the main or first listed speaker (some TED talks have more than one speaker)
 
-```{r ted-talks, exercise=TRUE}
-# glimpse `ted_talks` to see what is in the data set
-#glimpse(___)
-```
+
 
 ```{r ted-talks-solution}
 # glimpse `ted_talks` to see what is in the data set
@@ -133,10 +126,6 @@ The `text` data is currently in a dataframe, but it is not **tidy** in the sense
 
 When we do text analysis, the observations we are interested in aren't the whole talks at once, but rather individual _tokens_. A **token** is a meaningful unit of text for analysis; in many cases, this just means a single word. The process of **tokenization** identifies and breaks apart text into individual tokens. You can use [tidytext’s `unnest_tokens()` function](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html) to accomplish all of this at once, both the tidying and the tokenization.
 
-```{r tidy-talks, exercise=TRUE}
-#tidy_talks <- ted_talks %>% 
-#  ___(word, text)
-```
 
 ```{r }
 tidy_talks <- ted_talks %>% 
@@ -171,12 +160,7 @@ We said before that tokenization is the process of identifying and breaking apar
 
 - Use the same function for tokenizing and tidying to create the bigrams.
 
-```{r ted-bigram, exercise=TRUE}
-#ted_bigrams <- ted_talks %>% 
-#  ___(bigram, text, token = "ngrams", n = 2)
 
-#ted_bigrams
-```
 
 ```{r ted-bigram-solution}
 ted_bigrams <- ted_talks %>% 
@@ -192,10 +176,7 @@ Let's go back to single words. Now that our data in a tidy format, a whole world
 
 - Use `count()` to find the most common words.
 
-```{r top-ted, exercise=TRUE, warning=FALSE, message=FALSE, error=FALSE}
-#tidy_talks %>%
- # ___(word, sort = TRUE)
-```
+
 
 ```{r top-ted-solution}
 tidy_talks %>%
@@ -216,12 +197,7 @@ When text data is in a tidy format, stop words can be removed using an [`anti_jo
 
 - Within the `anti_join()`, add the call to `get_stopwords()`.
 - Add the arguments to `count()` so we count up words and sort them with the largest groups at the top.
-
-```{r stop-word, exercise=TRUE, warning=FALSE, message=FALSE, error=FALSE}
-#tidy_talks %>%
- # anti_join(___) %>%
- # count(___)
-```
+`
 
 ```{r stop-word-solution}
 tidy_talks %>%
@@ -237,17 +213,6 @@ Because we are using tidyverse tools, we can fluently pipe from the kind of code
 - Remove stop words (the default list) via an `anti_join()`.
 - Create a plot with `n` on the x-axis and `word` on the y-axis.
 
-```{r stop-word-viz, exercise=TRUE, warning=FALSE, message=FALSE, error=FALSE}
-#tidy_talks %>%
-  # remove stop words
-#  ___ %>%
-#  count(word, sort = TRUE) %>%
- # slice_max(n, n = 20) %>%
- # mutate(word = reorder(word, n)) %>%
-  # put `n` on the x-axis and `word` on the y-axis
- # ggplot(aes(___, ___)) +
- # geom_col()
-```
 
 ```{r stop-word-viz-solution}
 tidy_talks %>%
@@ -275,18 +240,7 @@ One of my favorite approaches to text analysis is to compare how different peopl
 
 The function [`pivot_wider()` from tidyr](https://tidyr.tidyverse.org/reference/pivot_wider.html) pivots the long, tidy dataframe to a wide dataframe so we can more easily compare the two speakers' word counts.
 
-```{r ted-final-pivot, exercise=TRUE, warning=FALSE, message=FALSE, error=FALSE}
-#tidy_talks %>%
- # ___(speaker %in% c("Jane Goodall", "Temple Grandin")) %>%
-  # remove stop words
- # ___ %>%
-  # count with two arguments
- # ___ %>%
-  #group_by(word) %>%
-  #___(sum(n) > 10) %>%
-  #ungroup() %>%
-  #pivot_wider(names_from = "speaker", values_from = "n", values_fill = 0) 
-```
+
 
 ```{r ted-final-pivot-solution}
 tidy_talks %>%
@@ -302,32 +256,6 @@ tidy_talks %>%
 ```
 
 
-### Visualize vocabulary comparison
-
-It's interesting to look at the numbers themselves, but this would be better as a **visualization**. We can put one speaker on the x-axis and the other on the y-axis to compare their word counts. Words that appear close to the `slope = 1` line are used about evenly by both (since the talks were about the same length) and words far away are used more by one speaker.
-
-- Load the [ggrepel](https://ggrepel.slowkow.com/) package, for better plotting of text labels.
-- Use `geom_text_repel()` to place the text annotations on the plot.
-
-```{r ted-final-viz, fig.width=6, fig.height=6, exercise=TRUE, warning=FALSE, message=FALSE, eval=FALSE,error=FALSE}
-#library(___)
-
-tidy_talks %>%
-  filter(speaker %in% c("Jane Goodall", "Temple Grandin")) %>%
-  anti_join(get_stopwords()) %>%
-  count(speaker, word) %>%
-  group_by(word) %>%
-  filter(sum(n) > 10) %>%
-  ungroup() %>%
-  pivot_wider(names_from = "speaker", values_from = "n", values_fill = 0) %>%
-  ggplot(aes(`Jane Goodall`, `Temple Grandin`)) +
-  geom_abline(color = "gray50", size = 1.2, alpha = 0.8, lty = 2) +
-  # use the special ggrepel geom for nicer text plotting
-  ___(aes(label = word)) +
-  coord_fixed()
-```
-
-
 ```{r ted-final-viz-solution}
 library(ggrepel)
 
@@ -340,7 +268,7 @@ tidy_talks %>%
   ungroup() %>%
   pivot_wider(names_from = "speaker", values_from = "n", values_fill = 0) %>%
   ggplot(aes(`Jane Goodall`, `Temple Grandin`)) +
-  geom_abline(color = "gray50", size = 1.2, alpha = 0.8, lty = 2) +
+  geom_abline(color = "gray50", linewidth = 1.2, alpha = 0.8, lty = 2) +
   # use the special ggrepel geom for nicer text plotting
   geom_text_repel(aes(label = word)) +
   coord_fixed()
