@@ -1,7 +1,24 @@
 /*-- scss:rules --*/
 h1.title {
-  background-image: url(images/HSF_germany.jpg), url(images/423_zahid.jpg);
+  
+  font-size: 250px !important;
+  color: red !important;
+  background-image: url(images/hsf.jpg), url(images/hsf1.jpg);
   background-repeat: no-repeat;
   background-position: left, right;
   background-size: 200px, 200px;
+  background-repeat: no-repeat;
+  padding-left: 5px;
+  background-origin: content-box;
+}
+
+
+
+.quarto-title-block .quarto-title-banner {
+  background-image: url(images/hsf.jpg),url(images/hsf1.jpg) ;
+  background-size: 200px;
+  background-position: left, right;
+  background-repeat: no-repeat;
+  padding-left: 5px;
+  background-origin: content-box;
 }

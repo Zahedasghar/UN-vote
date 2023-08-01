@@ -9,14 +9,15 @@ format:
     chalkboard: true
     slide-number: c/t
   
-    title-slide-attributes:
-      data-background-image: images/HSF_germany.jpg
-      data-background-size: 20%
-      data-background-position: 100% 100%
+    # title-slide-attributes:
+    #   data-background-image: images/HSF_germany.jpg
+    #   data-background-size: 20%
+    #   data-background-position: 100% 100%
 execute:
   echo: false
   warning: false
   freeze: auto
+css: title.css
 editor: visual
 ---
 
@@ -214,16 +215,11 @@ We're going to learn some of the most common dplyr functions:
 
 -   `count()`: count discrete values
 
-##
+## 
 
 ::: {.callout-warning style="color: red"}
 ## **Numbers and numbers which matter are different.**
-
-
-
 :::
-
-
 
 {{< video https://youtu.be/QKLvGvS1qGQ >}}
 
