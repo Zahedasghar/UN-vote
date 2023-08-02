@@ -3,7 +3,6 @@ title: "UN-voting"
 author: "Zahid Asghar"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  pdf_document: default
   html_document: default
 ---
 
@@ -27,10 +26,14 @@ library(kableExtra)
 library(knitr)
 library(DT)
 ```
-There are three files. `un_votes`, `un_roll_calls` and `un-issues`. Details of these files can be obtained from the following command.
+
+There are three files. `un_votes`, `un_roll_calls` and `un-issues`. Details of these files can be obtained from the following command. 
+
 
 ```{r}
+library(unvotes)
 glimpse(un_votes)
+
 glimpse(un_roll_calls)
 glimpse(un_roll_call_issues)
 ```

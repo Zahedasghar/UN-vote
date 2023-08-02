@@ -23,12 +23,22 @@ editor: visual
 
 ##  {background-color="black" background-image="https://media2.giphy.com/media/dPINusoxaJi2dU3gML/200.webp?cid=ecf05e472ghokh39348y5t428uk6lus4s0gkaiaqlwkznhuc&ep=v1_gifs_related&rid=200.webp&ct=g" background-size="300px" background-repeat="repeat"}
 
-## Mixed Methods Research {.r-stretch}
+## Mixed Methods Research 
 
--   [What is mixed methods research?]{style="color:blue;"}
--   Qualitative data analysis
--   [Quantitative data analysis]{style="color:blue;"}
--   How these two complement each other?
+> [**Precise research question and research design is the key. A wrong question will not have right or wrong answer.**]{style="color:orange;"} 
+
+::: incremental
+-   [**What is mixed methods research?**]{style="color:blue;"}
+-   **Qualitative data analysis** 
+
+-   [**Quantitative data analysis**]{style="color:blue;"}
+
+-   **How these two complement each other?** 
+
+-   -   [Taxonomy of data](https://zahidasghar.com/infstat23/taxonomy-of-data#/the-taxonomy-of-data)
+
+
+::: 
 
 ## Sources
 
@@ -69,7 +79,7 @@ editor: visual
 R Markdown is a file format for making dynamic documents with R. However, you need to call it from R to use it, and it was depedentn on knitr. If you're a Python user, it means you need to install R to use R Markdown. Quarto is a tool that you can call from the terminal or command line, and is independent from the computational systems. Quarto supports knitr, and can support others. So, you can think of Quarto as the next generation R Markdown that is fundamentally multilanguage and multiengine.
 :::
 
-## What are mixed-methods research? {auto-animate="true"}
+## What is mixed-methods research? {auto-animate="true"}
 
 <center>
 
@@ -158,7 +168,7 @@ King, Keohane and Verba (KKV) in their classic book, Designing Social Inquiry, a
 ## Data formats
 
 ::: incremental
--   [**.csv, .txt, .dta , .sav, .xlsx, .RData, ...**]{style="color:red;\""}
+-   \[**.csv, .txt, .dta , .sav, .xlsx, .RData, ...**\]{style="color:red;""}
 
 -   **Reading and saving/writing each ...**
 

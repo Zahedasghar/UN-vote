@@ -1,10 +1,10 @@
 library(pdftools)
-library(pdftools)
 library(stringi)
 library(tidyverse)
 library(janitor)
 library(tidytext)
-# pdf.text <- pdf_text("data/1377233084_761.pdf")
+
+ #pdf.text <- pdf_text("data/1377233084_761.pdf")
 # 
 # 
 # # Replace "your_file.pdf" with the actual file path of your PDF document
@@ -41,7 +41,7 @@ library(tidytext)
 
 
 
-save(spk, file="data/spk.RData")
+#save(spk, file="data/spk.RData")
 
 load("data/spk.RData")
 
@@ -88,3 +88,91 @@ atif_mian |> tibble(line=1, text=atif_mian) |> unnest_tokens(word, text) |> anti
   ggplot(aes(n, word)) +
   geom_col() +
   labs(y = NULL)
+
+
+
+
+
+
+
+pdf.text <- pdf_text("docs/data/MPS-Jul-2023-Eng[1].pdf")
+pdf.text
+# 
+# 
+# # Replace "your_file.pdf" with the actual file path of your PDF document
+ pdf_text_data <- readPDF("docs/data/MPS-Jul-2023-Eng[1].pdf")
+# 
+# 
+# # Replace "your_file.pdf" with the actual file path of your PDF document
+# pdf_text_data <- readPDF(control = list(text = "-layout"), elem=list(uri="data/1377233084_761.pdf"))
+# 
+# 
+# glimpse(text)
+# 
+ mps <- pdf.text 
+# 
+
+mpdf <- mps |>  tibble(line = 1, text = mps)
+# 
+mpdf |> unnest_tokens(word, text)
+
+ library(stopwords)
+mpdf |> unnest_tokens(word, text) |> anti_join(stop_words)
+# 
+# 
+mpdf |> unnest_tokens(word, text) |> anti_join(stop_words) |>
+  count(word,sort = TRUE)
+
+
+
+mpdf |> unnest_tokens(word, text) |> anti_join(stop_words) |>
+  count(word,sort = TRUE) |>
+  filter(n>4) |> 
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word)) +
+  geom_col(fill="steelblue") +
+  labs(y = NULL)+theme_minimal()+ labs(y="" ,title ="Terms used in MPS July 2023",
+                                       caption="SBP, text_analysis @Zahedasghar")
+
+
+mps_sw <- mpdf |>  unnest_tokens(word, text) |> anti_join(stop_words) 
+
+
+
+
+mps_sw %>%
+  count(word) %>%
+  filter(n > 4) %>%
+  ggplot(aes(x = reorder(word, n),
+             y = n)) +
+  geom_col() +
+  coord_flip()
+
+
+# Create a dataframe with the word count
+word_frequencies <-
+  mps_sw %>%
+  count(word)
+
+# Create a dataframe with the word count
+word_frequencies <-
+  mps_sw %>%
+  count(word)
+
+
+
+# Plot word cloud
+wordcloud::wordcloud(words = word_frequencies$word,
+                     freq = word_frequencies$n,
+                     random.order = FALSE,
+                     scale = c(2, 0.5),
+                     min.freq = 1,
+                     max.words = 100,
+                     colors = c("#6FA8F5",
+                                "#FF4D45",
+                                "#FFC85E")
+)
+
+
+
+
