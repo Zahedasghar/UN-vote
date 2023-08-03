@@ -1,7 +1,7 @@
 /*-- scss:rules --*/
 h1.title {
   
-  font-size: 250px !important;
+  font-size: 100px !important;
   color: red !important;
   background-image: url(images/hsf.jpg), url(images/hsf1.jpg);
   background-repeat: no-repeat;
