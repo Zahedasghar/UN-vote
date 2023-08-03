@@ -2,7 +2,7 @@
 title: "[QnQ Data Analysis for HSF Fellows]{.flow}"
 #subtitle: "HSF Research Fellows"
 author: "[[Zahid Asghar, Professor, School of Economics, QAU](https://zahedasghar.netlify.app)]{style=color:blue;}"
-date: 03-08-2023
+date: "today"
 date-format: "DD-MM-YYYY"
 
 format: 
